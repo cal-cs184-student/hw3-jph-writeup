@@ -1232,7 +1232,19 @@
                 come from runs with capture turned off. Neither addition changes the renderer's output; every
                 main-assignment image comes from the standard CPU path tracer.
             </p>
-
+        <h2 id="ai-acknowledgement">Acknowledgement of AI</h2>
+        <p>
+            I used LLM assistance as a development and documentation aid, while keeping implementation final validation under my own control.
+            Specifically, I used AI for:
+        </p>
+        <ul>
+            <li><strong>Testing and benchmarking workflow support:</strong> help drafting and refining command-line runs and comparison scripts (e.g., repeatable timing commands, output/log parsing, and parameter sweep suggestions).</li>
+            <li><strong>Write-up formatting and structure:</strong> help with HTML organization, section design, and layout polish (including clearer placement/wording for equations rendered with MathJax and image/table presentation).</li>
+            <li><strong>Code framework scaffolding:</strong> suggestions for structure and patches, including traversal/control-flow organization and documentation updates.</li>
+        </ul>
+        <p>
+            I did not use AI as a substitute for understanding or validation: I reviewed all suggestions, edited them to fit my codebase and intentions, and verified behavior through my own builds/renders/measurements before including results in this report.
+        </p>
         </div>
         <script>
             (function () {
