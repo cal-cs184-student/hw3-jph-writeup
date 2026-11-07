@@ -1,106 +1,1303 @@
-<html>
-	<head>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default'></script>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-		<style>
-			h1 {
-				text-align: center;
-			}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <style>
+        body {
+            background-color: white;
+            padding: 100px;
+            width: 1000px;
+            margin: auto;
+            text-align: left;
+            font-weight: 300;
+            font-family: 'Open Sans', sans-serif;
+            color: #121212;
+        }
 
-			.container {
-				margin: 0 auto;
-				padding: 60px 20%;
-			}
+        h1, h2, h3, h4 {
+            font-family: 'Source Sans Pro', sans-serif;
+        }
 
-			figure {
-				text-align: center;
-			}
+        kbd {
+            color: #121212;
+        }
 
-			img {
-				display: inline-block;
-			}
+        :root {
+            --paper: #e6ebe1;
+            --panel: #d5ddce;
+            --rule: #bcc7b4;
+            --ink: #23272b;
+            --muted: #4f564d;
+            --link: #6f2853;
+            --link-hover: #521b3d;
+            --red: #e0262b;
+            --green: #1fbf3a;
+            --blue: #2340d6;
+            --measure: 46rem;
+        }
 
-			body {
-				font-family: 'Inter', sans-serif;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-		<h1>CS184/284A Fall 2026 Homework 3 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+        * {
+            box-sizing: border-box;
+        }
 
-		<br>
+        html {
+            scroll-behavior: smooth;
+        }
 
-		Link to webpage: (TODO) <a href="https://cs184.eecs.berkeley.edu/fa26">cs184.eecs.berkeley.edu/fa26</a>
-		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/fa26">cs184.eecs.berkeley.edu/fa26</a>
-		
-		<figure>
-			<img src="assets/cornell.png" alt="Cornell Boxes with Bunnies" style="width:70%"/>
-			<figcaption>You can add images with captions!</figcaption>
-		</figure>
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+        }
 
-		<!--
-		We've already added one heading per part, to make your write-up as navigable when grading. Please fit your write-up within these sections!
-		-->
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+            font-size: 18px;
+            line-height: 1.65;
+            text-align: left;
+            font-weight: 400;
+            width: auto;
+            padding: 0;
+        }
 
-		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 56px 24px 96px;
+        }
 
-		<h2>Part 1: Ray Generation and Scene Intersection</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            .container > p,
+            .container > ul,
+            .container > ol,
+            .container > h2,
+            .container > h3,
+            .container > h4,
+            .container > pre,
+            .container > figure,
+            .masthead,
+            .toc,
+            .compare,
+            .specs {
+                max-width: var(--measure);
+                margin-left: auto;
+                margin-right: auto;
+            }
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
-		<div style="display: flex; flex-direction: column; align-items: center;">
-			<table style="width: 100%; text-align: center; border-collapse: collapse;">
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="assets/cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="assets/cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-			  </tr>
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="assets/cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="assets/cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-			  </tr>
-			</table>
-		</div>
-		
-		<h2>Part 2: Bounding Volume Hierarchy</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        h1, h2, h3, h4 {
+            font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+        }
 
-		<h2>Part 3: Direct Illumination</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        h1 {
+            font-weight: 600;
+            font-size: 2.1rem;
+            line-height: 1.2;
+            margin: 0 0 16px;
+            letter-spacing: -0.01em;
+        }
 
-		<h2>Part 4: Global Illumination</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        h2 {
+            font-weight: 600;
+            font-size: 1.55rem;
+            line-height: 1.25;
+            margin-top: 72px;
+            margin-bottom: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--rule);
+            scroll-margin-top: 16px;
+        }
 
-		<h2>Part 5: Adaptive Sampling</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        h3 {
+            font-weight: 500;
+            font-size: 1.15rem;
+            margin-top: 34px;
+            margin-bottom: 8px;
+            scroll-margin-top: 16px;
+        }
 
-		<h2>(Optional) Part 6: Extra Credit Opportunities</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
-		</div>
-	</body>
+        h4 {
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 26px;
+            margin-bottom: 6px;
+        }
+
+        p, li {
+            margin-top: 0;
+            margin-bottom: 1em;
+        }
+
+        ol, ul {
+            padding-left: 1.35em;
+        }
+
+        a {
+            color: var(--link);
+            text-underline-offset: 2px;
+        }
+
+            a:hover {
+                color: var(--link-hover);
+            }
+
+        code, pre, kbd {
+            font-family: 'IBM Plex Mono', Menlo, Consolas, monospace;
+        }
+
+        pre {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            background: var(--panel);
+            border-left: 3px solid var(--rule);
+            padding: 14px 16px;
+            overflow-x: auto;
+        }
+
+        .masthead {
+            padding-bottom: 28px;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+            .masthead::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 6px;
+                background: linear-gradient(90deg, var(--red), var(--green) 50%, var(--blue));
+            }
+
+            .masthead p {
+                margin: 4px 0;
+                color: var(--muted);
+                font-size: 1rem;
+            }
+
+        .toc {
+            font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.95rem;
+            margin-top: 24px;
+            margin-bottom: 8px;
+        }
+
+            .toc ul {
+                margin: 0;
+                padding-left: 0;
+                list-style: none;
+                columns: 2;
+                column-gap: 32px;
+            }
+
+            .toc li {
+                margin: 2px 0;
+                break-inside: avoid;
+            }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 32px 16px 64px;
+            }
+
+            .toc ul {
+                columns: 1;
+            }
+        }
+        /* --- HW2-style helpers --- */
+        .compare {
+            max-width: 920px;
+            margin: 0 auto;
+        }
+
+            .compare table {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 16px 12px;
+                table-layout: fixed;
+            }
+
+            .compare td {
+                text-align: center;
+                vertical-align: top;
+                padding: 0;
+            }
+
+            .compare img {
+                width: 100%;
+                height: auto;
+                border: 1px solid #cfcfcf;
+                background: #f3f3f3;
+            }
+
+        .specs {
+            max-width: 920px;
+            margin: 0 auto 16px auto;
+        }
+
+            .specs table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.95rem;
+            }
+
+            .specs th, .specs td {
+                text-align: left;
+                padding: 6px 10px;
+                border-bottom: 1px solid #d6d6d6;
+                vertical-align: top;
+            }
+
+            .specs th {
+                width: 32%;
+                color: #555;
+            }
+
+        .placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-height: 180px;
+            width: 100%;
+            padding: 16px;
+            border: 2px dashed #cfcfcf;
+            background: #efefef;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+            .placeholder strong {
+                color: #222;
+                font-weight: 600;
+            }
+
+        .magnify-auto {
+            position: relative;
+            display: inline-block;
+            overflow: visible;
+            cursor: crosshair;
+            line-height: 0;
+        }
+
+        .magnify-lens {
+            position: absolute;
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.28), 0 8px 20px rgba(0,0,0,0.25);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 120ms ease;
+            background-repeat: no-repeat;
+            z-index: 5;
+        }
+
+        .magnify-auto.active .magnify-lens {
+            opacity: 1;
+        }
+
+        @media (max-width: 640px) {
+            .compare table, .compare tbody, .compare tr, .compare td {
+                display: block;
+                width: 100%;
+            }
+
+            .compare td {
+                margin-bottom: 16px;
+            }
+        }
+    </style>
+    <title>CS 184 Path Tracer</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+
+    <script>
+        MathJax = {
+        tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+        };
+    </script>
+    <script id="MathJax-script" async=async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+</head>
+
+
+<body>
+    <div class="container">
+        <header class="masthead">
+            <h1>CS 184: Computer Graphics and Imaging — Project 3-1 Path Tracer</h1>
+            <p>Name: YOUR NAME</p>
+            <p>Website URL: <a href="TODO">TODO</a></p>
+            <p>GitHub Repo: <a href="https://github.com/cal-cs184-student/hw3-jph">cal-cs184-student/hw3-jph</a></p>
+        </header>
+
+        <nav class="toc" aria-label="Sections">
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#part1">Part 1: Ray Generation and Scene Intersection</a></li>
+                <li><a href="#part2">Part 2: BVH</a></li>
+                <li><a href="#part3">Part 3: Direct Illumination</a></li>
+                <li><a href="#part4">Part 4: Global Illumination</a></li>
+                <li><a href="#part5">Part 5: Adaptive Sampling</a></li>
+                <li><a href="#extra-credit">Part 6: Extra Credit</a></li>
+            </ul>
+        </nav>
+        <div>
+
+            <h2 id="overview">Overview (3 Points)</h2>
+            <p>
+                In this project I built a physically based path tracer in stages. It starts by generating camera rays
+                and intersecting them with triangles and spheres. A bounding volume hierarchy (BVH) then speeds up
+                those intersection tests enough that large meshes render in well under a second. On top of that
+                geometry core I added direct lighting (both uniform hemisphere sampling and light importance sampling),
+                full global illumination with recursive bounces and Russian Roulette termination, and adaptive sampling
+                that stops working on a pixel once its estimate has converged. For extra credit I made BVH traversal
+                iterative and added a timelapse capture mode to the GUI.
+            </p>
+            <p>
+                <strong>Problems I ran into and how I solved them:</strong>
+            </p>
+            <ul>
+                <li>
+                    <strong>Bug in triangle <code>has_intersection</code>.</strong> When I reviewed my intersection code, I found that
+                    <code>Triangle::has_intersection</code> computed the barycentric coordinate <code>v</code> with the wrong vector
+                    (it used the formula for <code>t</code>). <code>intersect()</code> was correct, and every ray in my pathtracer
+                    goes through <code>intersect()</code>, so no renders were affected. I fixed it so the two functions agree.
+                </li>
+                <li>
+                    <strong>Emission showing up in single-bounce renders.</strong> My first version of
+                    <code>est_radiance_global_illumination</code> always added zero-bounce emission. That put the light
+                    fixture into every unaccumulated (<code>-o 0</code>) image for <em>m</em> ≥ 1, even though those images
+                    should contain only bounce <em>m</em>. I changed it to skip emission in that mode and re-rendered the
+                    <em>m</em> = 1–5 images.
+                </li>
+                <li>
+                    <strong>Infinite recursion in BVH construction.</strong> A midpoint split can put every primitive on one side
+                    when centroids cluster together, which would make the recursion run forever. I fall back to a median split
+                    with <code>std::nth_element</code>, which always makes progress.
+                </li>
+                <li>
+                    <strong>Getting comparable benchmark numbers.</strong> My first timing runs mixed settings (some used
+                    adaptive sampling and multiple bounces) and wrote several scenes to the same log file. I reran everything
+                    with identical flags and a separate log per scene. To get no-BVH times I added a temporary
+                    <code>NO_BVH</code> environment switch that turns the whole scene into one leaf.
+                </li>
+            </ul>
+            <h3>What I learned</h3>
+            <p>
+                The geometry parts (ray generation, intersection, BVH, etc) tend to fail in obvious ways. The lighting code was
+                harder because a wrong estimator can still produces a generally correct looking image. I learned to check each term against
+                the math instead of trusting how a render looked. Direct lighting helped to apply practical understanding to Monte Carlo:
+                hemisphere and light sampling estimate the same integral, and where the samples go determines how noisy the final result is.
+                Global illumination definitely had the steepest learning curve since its recursion, bounce handling, and Russian
+                Roulette all had to agree for the image to be correct.
+
+            </p>
+            <br />
+
+            <h2 id="part1">Part 1: Ray Generation and Scene Intersection (20 Points)</h2>
+
+            <h3>Ray generation and primitive intersection</h3>
+            <p>
+                Rendering starts in <code>PathTracer::raytrace_pixel</code>. For a pixel at \((x,y)\), I take
+                <code>ns_aa</code> random sample points inside that pixel's square. I then divide each sample by the
+                image width and height to get normalized coordinates in \([0,1]^2\), and pass them to
+                <code>Camera::generate_ray</code>.
+            </p>
+            <p>
+                The camera maps the normalized point onto a virtual sensor plane that sits at <code>z = -1</code> in camera
+                space. The sensor spans \(\pm\tan(\text{hFov}/2)\) horizontally and \(\pm\tan(\text{vFov}/2)\) vertically, so
+                a normalized point \((x, y)\) lands at \(\big((2x-1)\tan(\text{hFov}/2),\ (2y-1)\tan(\text{vFov}/2),\ -1\big)\).
+                The ray starts at the camera origin and passes through that sensor point. I normalize its direction and
+                rotate it into world space with the <code>c2w</code> matrix. In world space the ray's origin is the camera position <code>pos</code>, and its valid range is set
+                to <code>min_t = nClip</code> and <code>max_t = fClip</code>. Once every sample ray has been traced, the
+                pixel's radiance estimates are averaged and written to the sample buffer.
+            </p>
+            <p>
+                Each camera ray is then tested against the scene's primitives. A hit only counts if its <code>t</code>
+                value is inside <code>[min_t, max_t]</code>. When I accept a hit, I shrink <code>max_t</code> to that
+                <code>t</code>, so anything farther away gets rejected automatically.
+            </p>
+
+            <h3>Triangle intersection algorithm</h3>
+            <p>
+                I used the Möller–Trumbore algorithm. Any point on the triangle can be written using barycentric
+                coordinates as \((1-u-v)\,p_1 + u\,p_2 + v\,p_3\). Any point on the ray is \(o + t\,d\). Setting the two
+                equal gives three linear equations with three unknowns: \(t\), \(u\), and \(v\). Möller–Trumbore solves that
+                system directly using Cramer's rule via only a few cross and dot products. With
+                \(e_1 = p_2 - p_1\), \(e_2 = p_3 - p_1\), \(s = o - p_1\), \(s_1 = d \times e_2\), and \(s_2 = s \times e_1\):
+                \[
+                \begin{bmatrix} t \\ u \\ v \end{bmatrix} = \frac{1}{s_1 \cdot e_1}
+                \begin{bmatrix} s_2 \cdot e_2 \\ s_1 \cdot s \\ s_2 \cdot d \end{bmatrix}
+                \]
+                First I check the denominator \(s_1 \cdot e_1\). If its magnitude is below <code>EPS_D</code>, the ray is
+                (nearly) parallel to the triangle's plane, so I report a miss rather than divide by almost zero. Otherwise
+                I accept the hit only when both of these hold:
+            </p>
+            <ul>
+                <li><code>u &gt;= 0</code>, <code>v &gt;= 0</code>, and <code>u + v &lt;= 1</code>, meaning the point is inside the triangle.</li>
+                <li><code>t</code> is in <code>[min_t, max_t]</code>, meaning the point is on the valid part of the ray.</li>
+            </ul>
+            <p>
+                When both checks pass, I set the ray's <code>max_t</code> to <code>t</code>. In <code>intersect(...)</code> I also
+                fill in the <code>Intersection</code> record: the hit distance <code>t</code>, the surface normal
+                (interpolated from the vertex normals <code>n1, n2, n3</code> with weights \((1-u-v, u, v)\)), a pointer to
+                the primitive, and a pointer to its BSDF.
+            </p>
+            <p>
+                Sphere intersection follows the same rules. Substituting the ray into \(\lVert p - c \rVert^2 = r^2\) gives a
+                quadratic in \(t\). I take the smaller root if it lies in
+                <code>[min_t, max_t]</code>, and the larger root if it doesn't (for example, when the ray starts inside the
+                sphere).
+            </p>
+
+            <h3>Results on small <code>.dae</code> scenes</h3>
+            <p>
+                The top two images were rendered once ray generation and pixel sampling worked, before any intersection
+                code existed. Each pixel's color is the world-space direction of the camera ray through it (X maps to red,
+                Y to green, Z to blue), which is a quick way to check that the rays fan out correctly across the image.
+            </p>
+            <p>
+                The bottom two images use normal shading after I added ray-triangle and ray-sphere intersection. No
+                lighting is computed at this stage: each pixel's color comes straight from the surface normal \(n\) at the
+                nearest hit, mapped from \([-1,1]\) to \([0,1]\) as \(0.5\,n + 0.5\).
+            </p>
+
+            <div class="compare">
+                <table>
+                    <tr>
+                        <td>
+                            <img src="images/part1_task1_CBEmpty.png" alt="Ray direction visualization for CBempty" />
+                            <figcaption><code>CBempty.dae</code>: ray direction check.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/part1_task2_banana.png" alt="Ray direction visualization for banana" />
+                            <figcaption><code>banana.dae</code>: ray direction check.</figcaption>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="images/part1_task3_CBEmpty.png" alt="Normal shading result for CBempty" />
+                            <figcaption><code>CBempty.dae</code>: normal shading with ray-triangle intersection.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/part1_task4_CBSphere.png" alt="Normal shading result for CBspheres" />
+                            <figcaption><code>CBspheres.dae</code>: normal shading with ray-triangle and ray-sphere intersection.</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <h2 id="part2">Part 2: Bounding Volume Hierarchy (17 Points)</h2>
+
+            <h3>BVH construction and splitting heuristic</h3>
+            <p>
+                I build the BVH recursively over a contiguous range of primitives, <code>[start, end)</code>. For each
+                call I compute two boxes: the node's bounding box (the union of every primitive's AABB) and a smaller
+                box around just the primitives' centroids. If the range holds <code>max_leaf_size</code> (4) primitives or
+                fewer, the node becomes a leaf and simply stores <code>start</code> and <code>end</code>.
+            </p>
+            <p>
+                Otherwise I split along the axis where the centroid box is widest. My split point is the middle of the
+                centroid box on that axis. I partition the range in place: primitives whose centroid is below the split
+                go left, the rest go to the right. Splitting along the widest axis tends to separate primitives that really are
+                far apart, and splitting at the midpoint is generally cheap to compute. The midpoint can fail however if every
+                centroid lands on one side (for example, when many primitives are clustered together). In that case I fall
+                back to a median split with <code>std::nth_element</code>, which always puts half the primitives on each
+                side, so recursion always makes progress and cannot loop forever.
+            </p>
+            <p>
+                For traversal, when a ray hits both children's boxes I visit the closer one first, meaning the child with
+                the smaller entry <code>t</code>. A hit in the near child shrinks <code>ray.max_t</code> early, so the far
+                child can often be skipped entirely. (Part 6 notes will go into this in more detail.)
+            </p>
+
+            <h3>Normal shading on large scenes (BVH-accelerated)</h3>
+            <div class="compare">
+                <table>
+                    <tr>
+                        <td>
+                            <img src="images/part2_cow_without_BVH.gif" alt="Cow render progression without BVH" />
+                            <figcaption><code>cow.dae</code>: render progress without the BVH (brute-force intersection).</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/part2_cow_with_BVH.gif" alt="Cow render progression with BVH" />
+                            <figcaption><code>cow.dae</code>: render progress with the BVH.</figcaption>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="images/CBlucy.png" alt="CBlucy render with BVH" />
+                            <figcaption><code>CBlucy.dae</code>: a large, detailed mesh that is only practical to render with the BVH.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/beast.png" alt="Beast render with BVH" />
+                            <figcaption><code>beast.dae</code>: another high-poly mesh rendered with the BVH.</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <p>
+                <strong>Image generation note:</strong> The two <code>cow.dae</code> GIFs are supplementary. Their frames come from my timelapse capture tool
+                (Part 6), which reads the renderer's own framebuffer, and they are animated, so the submitted PDF may not perfectly represent the visualization.
+            </p>
+
+            <h3>Render times with and without BVH acceleration</h3>
+            <div class="specs">
+                <table>
+                    <tr>
+                        <th>Configuration</th>
+                        <th>Render Time (s)</th>
+                        <th>Rays Traced</th>
+                        <th>MRays/s</th>
+                        <th>Avg. isects/ray</th>
+                    </tr>
+                    <tr>
+                        <td><code>cow.dae</code>, no BVH (brute force)</td>
+                        <td>26.8751</td>
+                        <td>479,770</td>
+                        <td>0.0179</td>
+                        <td>743.538704</td>
+                    </tr>
+                    <tr>
+                        <td><code>cow.dae</code>, BVH (recursive traversal)</td>
+                        <td>0.0694</td>
+                        <td>442,612</td>
+                        <td>6.3762</td>
+                        <td>2.267092</td>
+                    </tr>
+                    <tr>
+                        <td><code>cow.dae</code>, BVH (iterative, near-child-first)</td>
+                        <td>0.0660</td>
+                        <td>448,975</td>
+                        <td>6.7985</td>
+                        <td>1.181043</td>
+                    </tr>
+                </table>
+            </div>
+
+            <p>
+                All timings were taken on <code>cow.dae</code> at <code>800×600</code> with <code>-t 8</code>. Without
+                a BVH, every ray is tested against every triangle, which averages about 744 intersection tests per ray and
+                takes almost 27 seconds. With the BVH, render time drops to 0.069 s (about <strong>387×</strong> faster),
+                because most rays only reach a couple of triangles (about 2.27 tests per ray) after the bounding-box tests
+                throw out everything else. Visiting the nearer child first cuts that to 1.18 tests per ray and the time to
+                0.066 s (about <strong>407×</strong> faster than brute force), since the closest hit tends to be found
+                early and more of the tree gets skipped. The speedup comes from reducing the number of tests: brute-force work grows
+                linearly with triangle count, while BVH traversal grows roughly with the log of the triangle count.
+            </p>
+
+            <h3>Scaling across scenes</h3>
+            <p>
+                To check how the BVH scales, I rendered three meshes of very different sizes with identical settings:
+                <code>-t 8 -s 1 -l 1 -m 1 -r 800 600</code>, iterative traversal with near-child-first ordering.
+            </p>
+            <div class="specs">
+                <table>
+                    <tr>
+                        <th>Scene</th>
+                        <th>Primitives</th>
+                        <th>No BVH (s)</th>
+                        <th>BVH (s)</th>
+                        <th>Speedup</th>
+                        <th>MRays/s (BVH)</th>
+                        <th>Avg. isects/ray (BVH)</th>
+                    </tr>
+                    <tr>
+                        <td><code>cow.dae</code></td>
+                        <td>5,856</td>
+                        <td>14.4957</td>
+                        <td>0.0492</td>
+                        <td>~295×</td>
+                        <td>9.6839</td>
+                        <td>2.260171</td>
+                    </tr>
+                    <tr>
+                        <td><code>maxplanck.dae</code></td>
+                        <td>50,801</td>
+                        <td>148.4367</td>
+                        <td>0.0651</td>
+                        <td>~2,280×</td>
+                        <td>7.2398</td>
+                        <td>3.235291</td>
+                    </tr>
+                    <tr>
+                        <td><code>CBlucy.dae</code></td>
+                        <td>133,796</td>
+                        <td>398.3280</td>
+                        <td>0.0544</td>
+                        <td>~7,320×</td>
+                        <td>9.6515</td>
+                        <td>1.130211</td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                The two approaches scale in very different ways. Without a BVH, render time tracks triangle count:
+                going from the cow to Lucy is about 23× more triangles and about 27× more time (14.5 s to 398 s). With
+                the BVH, render time barely depends on mesh size: Lucy renders in nearly the same time as the cow
+                (0.054 s vs. 0.049 s), and every scene averages only 1–3.2 primitive tests per ray. As a result, the
+                speedup grows with scene size, from about 295× on the cow to about 2,280× on maxplanck and about 7,320×
+                on Lucy. A 6.6-minute render turned into 1/20s.
+            </p>
+            <p>
+                <strong>Note on GIF timing:</strong> the numbers in the table come from normal runs. The GIFs were recorded
+                with my timelapse capture (see Part 6), which saves viewport snapshots during the render. Each snapshot
+                reads the framebuffer back from the GPU (<code>glReadPixels</code>), flips it, and encodes a PNG to disk.
+                Those steps are synchronous and stall the render loop so the GIFs play back slower than the measured
+                render times.
+            </p>
+            <br />
+
+
+            <h2 id="part3">Part 3: Direct Illumination (20 Points)</h2>
+
+            <h3>The two direct lighting implementations</h3>
+            <p>
+                Both estimators compute the light reflected toward the camera at a surface hit point from light that
+                arrives directly from an emitter. They differ in how they pick incoming directions to sample.
+            </p>
+
+            <h4>Uniform hemisphere sampling (<code>estimate_direct_lighting_hemisphere</code>)</h4>
+            <p>
+                Here I take \(N\) = (number of lights) × <code>ns_area_light</code> samples of incoming directions, spread
+                uniformly over the hemisphere around the surface normal. For each direction, I convert it to world space and
+                cast a ray from the hit point with <code>min_t = EPS_F</code> so it doesn't hit the surface it starts on. If that ray hits an emissive surface, the surface's emission is the incoming
+                radiance \(L_i\). I combine the samples with the Monte Carlo estimator
+                \[
+                L_o \approx \frac{1}{N}\sum_{k=1}^{N}\frac{f(\omega_o,\omega_i^k)\,L_i(\omega_i^k)\,\cos\theta_k}{p(\omega_i^k)}
+                \]
+                with \(p(\omega_i)=\frac{1}{2\pi}\). The estimate is unbiased, but most random directions miss the light,
+                so many samples contribute nothing and the result is noisy.
+            </p>
+
+            <h4>Light importance sampling (<code>estimate_direct_lighting_importance</code>)</h4>
+            <p>
+                Instead of sampling the hemisphere, I loop over every light and sample points on it with
+                <code>sample_L</code>. That call returns a direction toward the light, the distance to it, the pdf, and the
+                emitted radiance. I skip samples that land behind the surface (\(\cos\theta \le 0\)). For the rest I cast a
+                shadow ray with <code>min_t = EPS_F</code> and <code>max_t = distToLight - EPS_F</code>; if nothing blocks
+                it, I add
+                \[
+                \frac{f(\omega_o,\omega_i)\,L_i\,\cos\theta}{\mathrm{pdf}}
+                \]
+                to that light's total. Each light's sum is divided by the number of samples taken for it: one for point
+                (delta) lights, since every sample would be identical, and <code>ns_area_light</code> for area lights. The
+                per-light results are then added together. Every sample is aimed at a light, so far fewer are wasted.
+            </p>
+
+            <h3>Images rendered with each implementation</h3>
+            <div class="compare">
+                <table>
+                    <tr>
+                        <th>Uniform Hemisphere Sampling</th>
+                        <th>Light Importance Sampling</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="images/part3_task3_64rays_32samples_6raydepth.png" alt="Uniform hemisphere sampling result" />
+                            <figcaption>Uniform hemisphere sampling: visible grain across the scene.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/part3_task4_64rays_32samples_6raydepth_nohemisphere.png" alt="Light importance sampling result" />
+                            <figcaption>Light importance sampling at the same settings: noticeably cleaner.</figcaption>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="images/part3_dragon_hemisphere.png" alt="Dragon rendered with uniform hemisphere sampling (black)" />
+                            <figcaption><code>dragon.dae</code>, uniform hemisphere sampling (<code>-s 64 -l 32 -m 6 -H</code>): completely black. The scene's light is a point light, and a randomly chosen direction never exactly hits a single point.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/part3_dragon_importance.png" alt="Dragon rendered with light importance sampling" />
+                            <figcaption><code>dragon.dae</code>, light importance sampling (<code>-s 64 -l 32 -m 6</code>): fully lit, because the light is sampled directly.</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <h3>Soft-shadow noise vs. number of light rays (<code>-s 1</code>, light sampling)</h3>
+            <p>
+                For this comparison I used the Cornell box spheres scene, which is lit by an area light on the ceiling. I
+                kept one camera sample per pixel (<code>-s 1</code>) and changed only the number of light samples
+                (<code>-l</code>):
+            </p>
+
+            <div class="compare">
+                <table>
+                    <tr>
+                        <td>
+                            <img src="images/part3_final_spheres_1_1.png" alt="spheres s1 l1" />
+                            <figcaption><code>-l 1</code>: one shadow ray per hit so each pixel in the penumbra is either fully lit or fully dark.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/part3_final_spheres_1_4.png" alt="spheres s1 l4" />
+                            <figcaption><code>-l 4</code>: the shadow edges start to show a gradient but are still grainy.</figcaption>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="images/part3_final_spheres_1_16.png" alt="spheres s1 l16" />
+                            <figcaption><code>-l 16</code>: the soft falloff is easier to see.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/part3_final_spheres_1_64.png" alt="spheres s1 l64" />
+                            <figcaption><code>-l 64</code>: smooth soft shadows.</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                More light samples give each point a better estimate of how much of the area light it can see, and that
+                fraction is exactly what decides the shadow's brightness in the penumbra. Monte Carlo noise falls off as
+                \(1/\sqrt{N}\), so each 4× increase in light rays roughly halves the noise. That is why the jump from 1 to 4
+                looks much bigger than the jump from 16 to 64. With only one camera sample per pixel, the edges of the
+                geometry stay aliased no matter how many light rays I use.
+            </p>
+
+            <h3>Uniform hemisphere sampling vs. light sampling</h3>
+            <p>
+                Both methods converge to the same answer, but light sampling gets there a lot faster. With uniform
+                hemisphere sampling, directions are spread evenly over the hemisphere and when the light covers only a
+                small part of the sky most rays miss it and return zero. The few rays that do hit the light produce large
+                values, so neighboring pixels come out very different which shows up as heavy grain, especially in soft
+                shadows. Light sampling only picks directions that point at a light, so nearly every sample (apart from
+                the occluded ones) contributes, and at the same sample count the image is far cleaner. Hemisphere sampling
+                also cannot render point lights at all, because a random direction has zero chance of hitting a single
+                point. In my renders, the light-sampled images were consistently less noisy at matching settings.
+            </p>
+            <br />
+
+
+            <h2 id="part4">Part 4: Global Illumination (25 Points)</h2>
+
+            <h3>Indirect lighting implementation</h3>
+            <p>
+                Indirect lighting lives in <code>at_least_one_bounce_radiance</code>, which follows one path through the
+                scene recursively. At each hit point I first add the direct lighting from <code>one_bounce_radiance</code>.
+                Then I call the BSDF's <code>sample_f</code> for a new incoming direction, which gives me the direction (in
+                local coordinates), the BSDF value \(f\), and the pdf. For the diffuse BSDF this is cosine-weighted hemisphere
+                sampling, with \(f = \text{albedo}/\pi\) and \(\text{pdf} = \cos\theta/\pi\). Directions near the normal,
+                which carry the most light, are therefore sampled more often. I convert the direction to world space and cast a new ray from the hit
+                point with <code>min_t = EPS_F</code> so it doesn't hit the surface it is leaving. The new ray has one less
+                depth (<code>ray.depth - 1</code>). If it hits something, I call the function again at that point and
+                weight the result by \(f(\omega_o,\omega_i)\cos\theta / (\text{pdf} \cdot p)\), where \(p\) is the Russian
+                Roulette continuation probability described next. If the ray escapes the scene and there is an environment
+                light, I use the environment's radiance instead.
+            </p>
+            <p>
+                Paths end in generally one of two ways. First, each camera ray starts with <code>depth = max_ray_depth</code>, and
+                when a hit has <code>depth &lt;= 1</code> I return only its direct lighting without recursing. Second, I use
+                Russian Roulette. The first indirect bounce is always traced, so every path with
+                <code>max_ray_depth &gt; 1</code> gets at least one bounce of indirect light. After that, each bounce
+                continues with probability \(p = 0.65\). That is a termination probability of 0.35. Surviving paths divide
+                their contribution by \(p\). Dividing by \(p\) makes up, on average, for the paths that were cut off, so
+                Russian Roulette adds no bias while making long paths increasingly rare.
+            </p>
+            <p>
+                The top-level function <code>est_radiance_global_illumination</code> traces the camera ray. With
+                <code>isAccumBounces=true</code>, it returns <code>zero_bounce_radiance</code> (light emitted straight toward
+                the camera) plus <code>at_least_one_bounce_radiance</code>, so every bounce from 0 up to the depth limit is
+                added together. With <code>isAccumBounces=false</code>, each level of the recursion returns only the light
+                passed up from the next level, and the deepest level returns its direct lighting. As a result,
+                <code>at_least_one_bounce_radiance</code> carries only bounce <em>m</em>. In this mode, emission is returned
+                only when <em>m</em> = 0, so each image in the isolated-bounce sets below contains exactly one bounce.
+            </p>
+
+            <h3>Global illumination renders (1024 spp)</h3>
+            <div class="compare">
+                <table>
+                    <tr>
+                        <td>
+                            <img src="images/bunny_m5_accum.png" alt="CBbunny global illumination m5 accum 1024 spp" />
+                            <figcaption><code>CBbunny.dae</code>, <code>-s 1024 -l 4 -m 5 -o 1</code>.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/spheres_global_1024.png" alt="CBspheres global illumination 1024 spp" />
+                            <figcaption><code>CBspheres.dae</code>, global illumination at 1024 spp.</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>Direct only vs. indirect only (CBbunny, 1024 spp)</h3>
+            <p>
+                To make these, I temporarily changed <code>at_least_one_bounce_radiance</code> to return only the direct
+                term or only the recursive (indirect) term.
+            </p>
+            <div class="compare">
+                <table>
+                    <tr>
+                        <th>Direct Only</th>
+                        <th>Indirect Only</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="images/bunny_direct_only_1024spp.png" alt="direct only bunny" />
+                            <figcaption>Direct lighting only.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/bunny_indirect_only_1024spp.png" alt="indirect only bunny" />
+                            <figcaption>Indirect (multi-bounce) lighting only.</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                The direct-only image has hard contrast: surfaces facing the light are bright, and anything the light
+                can't see, such as the ceiling and the shadow under the bunny, is pure black. The indirect-only image is
+                dimmer and softer overall. It lights the ceiling and fills in the shadows, and it picks up color from the
+                red and blue walls. Adding the two gives the full global illumination render above.
+            </p>
+
+            <h3>CBbunny, light from bounce <em>m</em> only (<code>isAccumBounces=false</code>, 1024 spp)</h3>
+            <p>
+                Each image shows only the light that reached the camera after exactly <em>m</em> bounces, for <code>m = 0..5</code>.
+            </p>
+            <div class="compare">
+                <table>
+                    <tr>
+                        <th>m=0</th>
+                        <th>m=1</th>
+                        <th>m=2</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="images/bunny_m0_unaccum.png" alt="bunny m0 unaccum" />
+                            <figcaption><code>-m 0 -o 0</code></figcaption>
+                        </td>
+                        <td>
+                            <img src="images/bunny_m1_unaccum.png" alt="bunny m1 unaccum" />
+                            <figcaption><code>-m 1 -o 0</code></figcaption>
+                        </td>
+                        <td>
+                            <img src="images/bunny_m2_unaccum.png" alt="bunny m2 unaccum" />
+                            <figcaption><code>-m 2 -o 0</code></figcaption>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>m=3</th>
+                        <th>m=4</th>
+                        <th>m=5</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <img src="images/bunny_m3_unaccum.png" alt="bunny m3 unaccum" />
+                            <figcaption><code>-m 3 -o 0</code></figcaption>
+                        </td>
+                        <td>
+                            <img src="images/bunny_m4_unaccum.png" alt="bunny m4 unaccum" />
+                            <figcaption><code>-m 4 -o 0</code></figcaption>
+                        </td>
+                        <td>
+                            <img src="images/bunny_m5_unaccum.png" alt="bunny m5 unaccum" />
+                            <figcaption><code>-m 5 -o 0</code></figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <p>
+                <strong>The 2nd and 3rd bounces:</strong> <em>m</em> = 0 is just the light source, and <em>m</em> = 1 is
+                ordinary direct lighting. The second bounce is light that has reflected off one surface before lighting the
+                point we see. It brightens areas the light can't reach directly, like the ceiling around the light and the
+                undersides of the bunny, and it carries red and blue from the side walls onto the floor and the bunny
+                (color bleeding). The third bounce is dimmer and smoother still, because some energy is absorbed at every
+                reflection. It mostly adds a faint, even fill to corners and shadows. A rasterizer with local shading
+                computes only the equivalent of <em>m</em> = 1, so those areas would come out black or get a flat ambient
+                constant. The 2nd and 3rd bounces supply soft fill light, lifted shadows, and color bleeding, which is a
+                large part of why the path-traced image looks real.
+            </p>
+
+            <h3>Accumulated vs. unaccumulated bounces (CBbunny, m=0..5, 1024 spp)</h3>
+            <p>
+                The left column shows only the light from bounce <em>m</em>. The right column shows the total of every
+                bounce up to <em>m</em>. The isolated bounces get dimmer as <em>m</em> grows, so the accumulated image
+                changes a lot from 0 to 2 and then very little after that.
+            </p>
+            <div class="compare">
+                <table>
+                    <tr>
+                        <th>Depth m</th>
+                        <th>Unaccumulated (<code>-o 0</code>)</th>
+                        <th>Accumulated (<code>-o 1</code>)</th>
+                    </tr>
+                    <tr>
+                        <td><strong>m=0</strong></td>
+                        <td><img src="images/bunny_m0_unaccum.png" alt="m0 unaccum" /></td>
+                        <td><img src="images/bunny_m0_accum.png" alt="m0 accum" /></td>
+                    </tr>
+                    <tr>
+                        <td><strong>m=1</strong></td>
+                        <td><img src="images/bunny_m1_unaccum.png" alt="m1 unaccum" /></td>
+                        <td><img src="images/bunny_m1_accum.png" alt="m1 accum" /></td>
+                    </tr>
+                    <tr>
+                        <td><strong>m=2</strong></td>
+                        <td><img src="images/bunny_m2_unaccum.png" alt="m2 unaccum" /></td>
+                        <td><img src="images/bunny_m2_accum.png" alt="m2 accum" /></td>
+                    </tr>
+                    <tr>
+                        <td><strong>m=3</strong></td>
+                        <td><img src="images/bunny_m3_unaccum.png" alt="m3 unaccum" /></td>
+                        <td><img src="images/bunny_m3_accum.png" alt="m3 accum" /></td>
+                    </tr>
+                    <tr>
+                        <td><strong>m=4</strong></td>
+                        <td><img src="images/bunny_m4_unaccum.png" alt="m4 unaccum" /></td>
+                        <td><img src="images/bunny_m4_accum.png" alt="m4 accum" /></td>
+                    </tr>
+                    <tr>
+                        <td><strong>m=5</strong></td>
+                        <td><img src="images/bunny_m5_unaccum.png" alt="m5 unaccum" /></td>
+                        <td><img src="images/bunny_m5_accum.png" alt="m5 accum" /></td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>Russian Roulette renders (CBbunny, m=0, 1, 2, 3, 4, 100, 1024 spp)</h3>
+            <p>
+                These are rendered with Russian Roulette turned on. The image changes little past <em>m</em> = 4 or so,
+                even with <em>m</em> = 100, because very few paths survive that many roulette checks and the light carried
+                by later bounces is already tiny. Render time therefore grows only slightly with the depth limit.
+            </p>
+            <div class="compare">
+                <table>
+                    <tr>
+                        <th>m=0</th>
+                        <th>m=1</th>
+                        <th>m=2</th>
+                    </tr>
+                    <tr>
+                        <td><img src="images/bunny_rr_m0.png" alt="rr m0" /></td>
+                        <td><img src="images/bunny_rr_m1.png" alt="rr m1" /></td>
+                        <td><img src="images/bunny_rr_m2.png" alt="rr m2" /></td>
+                    </tr>
+                    <tr>
+                        <th>m=3</th>
+                        <th>m=4</th>
+                        <th>m=100</th>
+                    </tr>
+                    <tr>
+                        <td><img src="images/bunny_rr_m3.png" alt="rr m3" /></td>
+                        <td><img src="images/bunny_rr_m4.png" alt="rr m4" /></td>
+                        <td><img src="images/bunny_rr_m100.png" alt="rr m100" /></td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>Samples per pixel (CBbunny, <code>-l 4</code>)</h3>
+            <p>
+                At 1 and 2 spp the image is covered in bright and dark speckles: each pixel follows only one or two random
+                paths, and those paths may or may not reach the light. Each doubling of samples visibly reduces the noise.
+                By 64 spp the overall shape and lighting are clear, but the shadows and indirectly lit areas are still a
+                little grainy. At 1024 spp the image is smooth.
+            </p>
+            <div class="compare">
+                <table>
+                    <tr>
+                        <th>s=1</th>
+                        <th>s=2</th>
+                        <th>s=4</th>
+                    </tr>
+                    <tr>
+                        <td><img src="images/bunny_s1_l4.png" alt="s1 l4" /></td>
+                        <td><img src="images/bunny_s2_l4.png" alt="s2 l4" /></td>
+                        <td><img src="images/bunny_s4_l4.png" alt="s4 l4" /></td>
+                    </tr>
+                    <tr>
+                        <th>s=8</th>
+                        <th>s=16</th>
+                        <th>s=64</th>
+                    </tr>
+                    <tr>
+                        <td><img src="images/bunny_s8_l4.png" alt="s8 l4" /></td>
+                        <td><img src="images/bunny_s16_l4.png" alt="s16 l4" /></td>
+                        <td><img src="images/bunny_s64_l4.png" alt="s64 l4" /></td>
+                    </tr>
+                    <tr>
+                        <th colspan="3">s=1024</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <img src="images/bunny_s1024_l4.png" alt="s1024 l4" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <br />
+
+
+            <h2 id="part5">Part 5: Adaptive Sampling (15 Points)</h2>
+
+            <h3>What adaptive sampling is, and how I implemented it</h3>
+            <p>
+                Some pixels converge after a handful of samples (a flat, evenly lit wall), while others need many more (a
+                soft shadow edge). With a fixed sample count, the same budget goes to both. Adaptive sampling checks each
+                pixel's estimate as it goes and stops once the estimate is statistically stable, so the remaining work goes
+                to pixels that are still noisy.
+            </p>
+            <p>
+                In <code>PathTracer::raytrace_pixel(...)</code> I keep two running sums over each sample's illuminance
+                \(x_k = \text{illum}(L_k)\): <code>s1 = Σx_k</code> and <code>s2 = Σx_k²</code>. Recomputing the mean and
+                variance after every sample would waste time, so I only check convergence after every
+                <code>samplesPerBatch</code> samples (64 in my runs). At each check I compute
+            </p>
+            <p>
+                \[
+                \mu = \frac{s1}{n}, \quad
+                \sigma^2 = \frac{1}{n-1}\left(s2 - \frac{s1^2}{n}\right), \quad
+                I = 1.96 \cdot \frac{\sigma}{\sqrt{n}}
+                \]
+            </p>
+            <p>
+                where \(I\) is the half-width of a 95% confidence interval for the pixel's mean. The pixel is treated as
+                converged when
+                \[
+                I \le \text{maxTolerance} \cdot \mu
+                \]
+                with <code>maxTolerance = 0.05</code>. In other words, I stop when I'm about 95% confident the true value is
+                within 5% of the current estimate. If the test passes then sampling for that pixel ends. Otherwise it
+                continues until it hits <code>ns_aa</code>. Either way, I average over the <code>n</code> samples actually
+                taken and write <code>n</code> to <code>sampleCountBuffer</code>, which the sampling-rate images below
+                visualize.
+            </p>
+
+            <h3>Adaptive sampling results (2048 spp budget)</h3>
+            <p>
+                Both scenes were rendered with <code>-s 2048 -l 1 -m 5 -o 1 -a 64 0.05</code>. In the sampling-rate images,
+                each pixel's color shows the fraction of the 2048-sample budget it used. Blue means it stopped
+                very early, green means it used about half, and red means it used the full budget.
+            </p>
+
+            <div class="compare">
+                <table>
+                    <tr>
+                        <th>Scene</th>
+                        <th>Rendered Result</th>
+                        <th>Sampling Rate</th>
+                    </tr>
+                    <tr>
+                        <td><strong>wall-e.dae</strong></td>
+                        <td>
+                            <img src="images/wall-e_adaptive_lighting.png" alt="wall-e adaptive render result" />
+                            <figcaption>Final adaptive render.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/wall-e_adaptive_lighting_rate.png" alt="wall-e adaptive sampling rate image" />
+                            <figcaption>Per-pixel sample counts from <code>sampleCountBuffer</code>.</figcaption>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>bench.dae</strong></td>
+                        <td>
+                            <img src="images/bench_adaptive_lighting.png" alt="bench adaptive render result" />
+                            <figcaption>Final adaptive render.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/bench_adaptive_lighting_rate.png" alt="bench adaptive sampling rate image" />
+                            <figcaption>Per-pixel sample counts, showing where extra samples went.</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <p>
+                In both scenes, smooth, evenly lit surfaces stop early, while geometric edges, shadow boundaries, and dim
+                indirectly lit areas keep sampling up to the full budget, since those are the places where individual
+                samples disagree most. The final renders look very clean and sharp, but a large share of pixels finished well under 2048
+                samples, so the total work was lower than a uniform 2048 spp render.
+            </p>
+
+
+            <br />
+
+            <h2 id="extra-credit">Part 6: Extra Credit — Faster BVH Traversal and a Timelapse Capture Tool</h2>
+
+            <h3>1) Challenge Level 1: iterative, stack-based BVH traversal</h3>
+            <p>
+                I replaced the recursive BVH traversal with an iterative one in both <code>BVHAccel::has_intersection</code>
+                and <code>BVHAccel::intersect</code>. Each uses an explicit <code>std::stack</code> of nodes inside a
+                <code>while</code> loop. This avoids the overhead of recursive function calls and gives me direct control
+                over the order nodes are visited.
+            </p>
+            <ul>
+                <li><strong>Early rejection at the root:</strong> if the ray misses the root's bounding box, I return immediately without touching the stack.</li>
+                <li><strong>Near child first:</strong> at an interior node, I test both children's boxes against the ray's current <code>[min_t, max_t]</code> and push only the children that were hit. If both were hit, I push the far child first and the near child second. The stack is last-in, first-out, so the near child (smaller entry <code>t</code>) is popped and visited first.</li>
+                <li><strong>Re-test when a node is popped:</strong> each popped node's box is tested again against the <em>current</em> <code>max_t</code>. If the near subtree has already produced a closer hit, the far child's box now starts beyond <code>max_t</code>, and I skip the whole subtree without testing any of its primitives.</li>
+                <li><strong>Same approach in both functions:</strong> <code>has_intersection</code> (any hit, returns as soon as one is found) and <code>intersect</code> (nearest hit) traverse the same way.</li>
+            </ul>
+            <p>
+                Results on <code>cow.dae</code> (<code>800×600</code>, <code>-t 8</code>):
+            </p>
+            <div class="specs">
+                <table>
+                    <tr>
+                        <th>Traversal</th>
+                        <th>Render Time (s)</th>
+                        <th>MRays/s</th>
+                        <th>Avg. isects/ray</th>
+                    </tr>
+                    <tr>
+                        <td>Recursive (baseline)</td>
+                        <td>0.0694</td>
+                        <td>6.3762</td>
+                        <td>2.267092</td>
+                    </tr>
+                    <tr>
+                        <td>Iterative + near-child-first</td>
+                        <td>0.0660</td>
+                        <td>6.7985</td>
+                        <td>1.181043</td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                The iterative version is about 5% faster in wall-clock time (0.0694 s → 0.0660 s) and traces about 7% more
+                rays per second. The bigger change is in intersection tests per ray, which drop by about 48% (2.27 → 1.18)
+                because finding hits early lets more of the tree be skipped. The time gain is smaller than the drop in
+                tests, probably because with the BVH a render this small is no longer dominated by triangle tests.
+            </p>
+            <div class="specs">
+                <table>
+                    <tr>
+                        <th>Scene</th>
+                        <th>Primitives</th>
+                        <th>BVH Build Time (s, mean of 3 runs)</th>
+                    </tr>
+                    <tr>
+                        <td><code>cow.dae</code></td>
+                        <td>5,856</td>
+                        <td>0.0030</td>
+                    </tr>
+                    <tr>
+                        <td><code>maxplanck.dae</code></td>
+                        <td>50,801</td>
+                        <td>0.0321</td>
+                    </tr>
+                    <tr>
+                        <td><code>CBlucy.dae</code></td>
+                        <td>133,796</td>
+                        <td>0.1071</td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                Build time grows a little faster than the primitive count: about 23× more primitives (cow to Lucy) takes
+                about 36× longer to build. That is roughly consistent with the expected \(O(n \log n)\) cost of a top-down
+                build, where each of the roughly \(\log n\) tree levels does a linear pass over the primitives (\(n \log n\)
+                predicts about 31×; the rest is plausibly cache effects at larger sizes). At 1 sample per pixel, Lucy's
+                build (0.107 s) actually takes longer than its render (0.054 s). But the build happens once per scene,
+                while traversal cost grows with every sample and bounce, so for real renders at hundreds or thousands of
+                samples per pixel, traversal dominates.
+            </p>
+
+            <h3>2) Challenge Level 1, GUI feature (saving incremental results): timelapse auto-capture</h3>
+            <p>
+                I also added an automatic timelapse mode to the GUI, toggled with <code>T</code>, so I could record a
+                render in progress without taking screenshots by hand. The <code>cow.dae</code> GIFs in Part 2 were made
+                from these captures.
+            </p>
+            <ul>
+                <li>While a render is running, frames are saved at regular intervals by reading back the framebuffer (<code>glReadPixels</code>), flipping it vertically, and writing a PNG.</li>
+                <li>A final frame is saved automatically when the render finishes.</li>
+                <li>Each session's frames go into their own timestamped folder under <code>captures/</code>.</li>
+            </ul>
+            <div class="compare">
+                <table>
+                    <tr>
+                        <td>
+                            <img src="images/part2_cow_without_BVH.gif" alt="Timelapse capture of cow render without BVH" />
+                            <figcaption>Timelapse of <code>cow.dae</code> without the BVH.</figcaption>
+                        </td>
+                        <td>
+                            <img src="images/part2_cow_with_BVH.gif" alt="Timelapse capture of cow render with BVH" />
+                            <figcaption>Timelapse of <code>cow.dae</code> with the BVH.</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <p>
+                Capturing does slow the render down (see the note in Part 2), so all the timing numbers in this write-up
+                come from runs with capture turned off. Neither addition changes the renderer's output; every
+                main-assignment image comes from the standard CPU path tracer.
+            </p>
+
+        </div>
+        <script>
+            (function () {
+            function toPlaceholder(el) {
+            var box = document.createElement('div');
+            box.className = 'placeholder';
+            var label = el.getAttribute('alt') || (el.tagName === 'VIDEO' ? 'Video / GIF' : 'Image');
+            var path = el.getAttribute('src') || '';
+            box.innerHTML = '<strong></strong><span>Add file at</span><code></code>';
+            box.querySelector('strong').textContent = label;
+            box.querySelector('code').textContent = path;
+            el.replaceWith(box);
+            }
+
+            function initMagnifierForImage(img) {
+            if (!img || !img.parentNode) return;
+            if (img.closest('.magnify-auto')) return;
+            if (!img.naturalWidth) return;
+
+            var wrapper = document.createElement('span');
+            wrapper.className = 'magnify-auto';
+            wrapper.setAttribute('data-zoom', img.getAttribute('data-zoom') || '2.6');
+
+            img.parentNode.insertBefore(wrapper, img);
+            wrapper.appendChild(img);
+
+            var lens = document.createElement('span');
+            lens.className = 'magnify-lens';
+            wrapper.appendChild(lens);
+
+            function updateLens(clientX, clientY) {
+            var rect = wrapper.getBoundingClientRect();
+            var x = clientX - rect.left;
+            var y = clientY - rect.top;
+            x = Math.max(0, Math.min(x, rect.width));
+            y = Math.max(0, Math.min(y, rect.height));
+
+            var lensW = lens.offsetWidth;
+            var lensH = lens.offsetHeight;
+            var zoom = parseFloat(wrapper.getAttribute('data-zoom') || '2.6');
+            var src = img.currentSrc || img.src;
+
+            lens.style.left = (x - lensW / 2) + 'px';
+            lens.style.top = (y - lensH / 2) + 'px';
+            lens.style.backgroundImage = 'url("' + src + '")';
+            lens.style.backgroundSize = (rect.width * zoom) + 'px ' + (rect.height * zoom) + 'px';
+            lens.style.backgroundPosition = (-x * zoom + lensW / 2) + 'px ' + (-y * zoom + lensH / 2) + 'px';
+            }
+
+            wrapper.addEventListener('mouseenter', function () { wrapper.classList.add('active'); });
+            wrapper.addEventListener('mouseleave', function () { wrapper.classList.remove('active'); });
+            wrapper.addEventListener('mousemove', function (e) { updateLens(e.clientX, e.clientY); });
+            }
+
+            document.querySelectorAll('img').forEach(function (img) {
+            if (img.complete && img.naturalWidth === 0) toPlaceholder(img);
+            else img.addEventListener('error', function () { toPlaceholder(img); });
+            });
+
+            document.querySelectorAll('.compare img').forEach(function (img) {
+            if (img.complete && img.naturalWidth > 0) initMagnifierForImage(img);
+            else img.addEventListener('load', function () { initMagnifierForImage(img); }, { once: true });
+            });
+            })();
+        </script>
+    </div>
+</body>
 </html>
